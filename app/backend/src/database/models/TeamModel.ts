@@ -1,5 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
-import MatchModel from './MatchModel';
+// import MatchModel from './MatchModel';
 import db from '.';
 
 class TeamModel extends Model {
@@ -11,7 +11,7 @@ TeamModel.init({
   id: {
     primaryKey: true,
     autoIncrement: true,
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
   },
   teamName: {
     type: DataTypes.STRING,
@@ -23,24 +23,24 @@ TeamModel.init({
   sequelize: db,
 });
 
-TeamModel.hasMany(MatchModel, {
-  foreignKey: 'home_team_id',
-  as: 'homeTeam',
-});
+// TeamModel.hasMany(MatchModel, {
+//   foreignKey: 'home_team_id',
+//   as: 'homeTeam',
+// });
 
-TeamModel.hasMany(MatchModel, {
-  foreignKey: 'away_team_id',
-  as: 'awayTeam',
-});
+// TeamModel.hasMany(MatchModel, {
+//   foreignKey: 'away_team_id',
+//   as: 'awayTeam',
+// });
 
-MatchModel.belongsTo(TeamModel, {
-  foreignKey: 'home_team_id',
-  as: 'homeTeamId',
-});
+// MatchModel.belongsTo(TeamModel, {
+//   foreignKey: 'home_team_id',
+//   as: 'homeTeamId',
+// });
 
-MatchModel.belongsTo(TeamModel, {
-  foreignKey: 'away_team_id',
-  as: 'awayTeamId',
-});
+// MatchModel.belongsTo(TeamModel, {
+//   foreignKey: 'away_team_id',
+//   as: 'awayTeamId',
+// });
 
 export default TeamModel;

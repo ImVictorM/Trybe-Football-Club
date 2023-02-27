@@ -13,7 +13,7 @@ UserModel.init({
   id: {
     primaryKey: true,
     autoIncrement: true,
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
   },
   username: {
     type: DataTypes.STRING,

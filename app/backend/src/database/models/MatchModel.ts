@@ -14,11 +14,11 @@ MatchModel.init({
   id: {
     primaryKey: true,
     autoIncrement: true,
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
   },
 
   homeTeamId: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
     references: {
       model: 'teams',
       key: 'id',
@@ -28,11 +28,11 @@ MatchModel.init({
   },
 
   homeTeamGoals: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
   },
 
   awayTeamId: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
     references: {
       model: 'teams',
       key: 'id',
@@ -42,7 +42,7 @@ MatchModel.init({
   },
 
   awayTeamGoals: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
   },
 
   inProgress: {

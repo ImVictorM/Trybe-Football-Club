@@ -1,3 +1,4 @@
+'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('matches', {
@@ -8,7 +9,7 @@ module.exports = {
       },
 
       home_team_id: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         references: {
           model: 'teams',
           key: 'id',
@@ -18,11 +19,11 @@ module.exports = {
       },
 
       home_team_goals: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
       },
 
       away_team_id: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         references: {
           model: 'teams',
           key: 'id',
@@ -32,7 +33,7 @@ module.exports = {
       },
 
       away_team_goals: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
       },
 
       in_progress: Sequelize.BOOLEAN,
