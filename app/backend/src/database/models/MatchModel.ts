@@ -1,5 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import db from '.';
+import TeamModel from './TeamModel';
 
 class MatchModel extends Model {
   declare id: number;
@@ -54,6 +55,27 @@ MatchModel.init({
   timestamps: false,
   modelName: 'matches',
   sequelize: db,
+});
+
+// create associations between team and matches
+TeamModel.hasMany(MatchModel, {
+  foreignKey: 'home_team_id',
+  as: 'homeTeam',
+});
+
+TeamModel.hasMany(MatchModel, {
+  foreignKey: 'away_team_id',
+  as: 'awayTeam',
+});
+
+MatchModel.belongsTo(TeamModel, {
+  foreignKey: 'home_team_id',
+  as: 'homeTeamId',
+});
+
+MatchModel.belongsTo(TeamModel, {
+  foreignKey: 'away_team_id',
+  as: 'awayTeamId',
 });
 
 export default MatchModel;
