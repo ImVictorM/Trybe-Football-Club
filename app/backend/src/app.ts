@@ -1,5 +1,5 @@
 import * as express from 'express';
-import TeamController from './controllers/TeamController';
+import TeamController from './api/controllers/TeamController';
 
 class App {
   public app: express.Express;

@@ -1,6 +1,6 @@
 /* eslint class-methods-use-this: ["error", {"exceptMethods": []}] */
 import { ModelStatic } from 'sequelize';
-import TeamModel from '../database/models/TeamModel';
+import TeamModel from '../../database/models/TeamModel';
 import IServiceTeam from './interfaces/IServiceTeam';
 
 class TeamService implements IServiceTeam {
