@@ -12,3 +12,5 @@ export const FIND_ALL_MOCK = [
     teamName: "Botafogo",
   },
 ];
+
+export const ID_ONE_TEAM_MOCK = FIND_ALL_MOCK[0];
