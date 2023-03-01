@@ -4,17 +4,18 @@ import UserModel from '../../database/models/UserModel';
 import IServiceUser, { IToken, IUser } from './interfaces/IServiceUser';
 import AuthService from './AuthService';
 import userPattern from './schemas/userPattern';
+import { InvalidUserData, InvalidUserRequest } from '../errors';
 
 class UserService implements IServiceUser {
   private userModel: ModelStatic<UserModel> = UserModel;
 
   private validateUserDataFromRequest(userFromRequest: IUser): void {
-    const { error } = userPattern.validate(userFromRequest);
+    const { error: joiError } = userPattern.validate(userFromRequest);
 
-    if (error) {
-      const errorMessage = error.details[0].message;
-      const errorCode = (errorMessage === 'All fields must be filled') ? '400' : '401';
-      error.stack = errorCode;
+    if (joiError) {
+      const joiErrorMessage = joiError.details[0].message;
+      const error = (joiErrorMessage === 'All fields must be filled')
+        ? new InvalidUserRequest() : new InvalidUserData();
       throw error;
     }
   }
@@ -39,9 +40,7 @@ class UserService implements IServiceUser {
       return { token };
     }
 
-    const error = new Error('Invalid email or password');
-    error.stack = '401';
-    throw error;
+    throw new InvalidUserData();
   }
 }
 
