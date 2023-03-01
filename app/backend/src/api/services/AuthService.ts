@@ -2,7 +2,7 @@ import bcrypt = require('bcryptjs');
 import jwt = require('jsonwebtoken');
 import { IUser } from './interfaces/IServiceUser';
 
-const { JWT_SECRET } = process.env;
+const JWT_SECRET = process.env.JWT_SECRET || 'testsecret';
 
 class AuthService {
   public static checkPassword(password: string, hash: string): void {

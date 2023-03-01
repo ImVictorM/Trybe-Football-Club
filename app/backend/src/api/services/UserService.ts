@@ -29,6 +29,7 @@ class UserService implements IServiceUser {
     this.validateUserDataFromRequest(userFromRequest);
 
     const user = await this.getUserByEmail(email);
+    console.log(user);
 
     if (user) {
       AuthService.checkPassword(password, user.password);

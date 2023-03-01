@@ -13,7 +13,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Test team routes', function () {
+describe('Test team-related routes', function () {
   let chaiHttpResponse: Response;
 
   afterEach(()=>{
