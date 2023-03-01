@@ -20,11 +20,11 @@ class UserService implements IServiceUser {
     }
   }
 
-  private async getUserByEmail(email: string): Promise<IUser> {
+  private async getUserByEmail(email: string): Promise<IUser | null> {
     const user = await this.userModel.findOne({
       where: { email },
     });
-    return user as IUser;
+    return user || null;
   }
 
   public async login(userFromRequest: IUser): Promise<IToken> {
