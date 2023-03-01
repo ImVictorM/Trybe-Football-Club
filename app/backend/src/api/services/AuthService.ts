@@ -8,8 +8,8 @@ class AuthService {
   public static checkPassword(password: string, hash: string): void {
     const passwordIsValid = bcrypt.compareSync(password, hash);
     if (!passwordIsValid) {
-      const error = new Error('All fields must be filled');
-      error.stack = '400';
+      const error = new Error('Invalid email or password');
+      error.stack = '401';
       throw error;
     }
   }
