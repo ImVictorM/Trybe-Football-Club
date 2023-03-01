@@ -1,10 +1,11 @@
-/* eslint class-methods-use-this: ["error", {"exceptMethods": ["initService"]}] */
 import { Router } from 'express';
 import { Response, Request } from 'express-serve-static-core';
 import { TeamService } from '../services';
 import Controller from './Controller';
 
 class TeamController extends Controller<TeamService> {
+  private _service = new TeamService();
+
   public async getAllTeams(_req: Request, res: Response) {
     const teams = await this.service.findAllTeams();
     return res.status(200).json(teams);
@@ -17,7 +18,7 @@ class TeamController extends Controller<TeamService> {
   }
 
   initService(): TeamService {
-    return new TeamService();
+    return this._service;
   }
 
   initRoutes(): Router {

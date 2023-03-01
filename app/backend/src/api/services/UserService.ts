@@ -1,4 +1,3 @@
-/* eslint class-methods-use-this: ["error", {"exceptMethods": ["validateUserDataFromRequest"]}] */
 import { ModelStatic } from 'sequelize';
 import UserModel from '../../database/models/UserModel';
 import IServiceUser, { IToken, IUserFromDB, IUserFromReq } from './interfaces/IServiceUser';
@@ -9,7 +8,7 @@ import { InvalidUserData, InvalidUserRequest } from '../errors';
 class UserService implements IServiceUser {
   private userModel: ModelStatic<UserModel> = UserModel;
 
-  private validateUserDataFromRequest(userFromRequest: IUserFromReq): void {
+  static validateUserDataFromRequest(userFromRequest: IUserFromReq): void {
     const { error: joiError } = userPattern.validate(userFromRequest);
 
     if (joiError) {
@@ -30,7 +29,7 @@ class UserService implements IServiceUser {
   public async login(userFromRequest: IUserFromReq): Promise<IToken> {
     const { email, password } = userFromRequest;
 
-    this.validateUserDataFromRequest(userFromRequest);
+    UserService.validateUserDataFromRequest(userFromRequest);
 
     const user = await this.getUserByEmail(email);
 

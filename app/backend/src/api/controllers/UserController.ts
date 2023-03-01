@@ -1,5 +1,3 @@
-/* eslint class-methods-use-this: ["error", {"exceptMethods": ["initService", "getRoleFromToken"]}] */
-
 import { Request, Response, Router } from 'express';
 import { JwtPayload } from 'jsonwebtoken';
 import { TokenHandler } from '../middlewares';
@@ -9,6 +7,8 @@ import { IUserFromReq } from '../services/interfaces/IServiceUser';
 import Controller from './Controller';
 
 class UserController extends Controller<UserService> {
+  protected _service = new UserService();
+
   public async login(req: Request, res: Response) {
     const user = req.body as IUserFromReq;
     const { token } = await this.service.login(user);
@@ -16,21 +16,21 @@ class UserController extends Controller<UserService> {
   }
 
   // must use token validation before using this method
-  public getRoleFromToken(req: Request, res: Response) {
+  public static getRoleFromToken(req: Request, res: Response) {
     const tokenFromReq = req.headers.authorization as string;
     const user = AuthService.checkUserToken(tokenFromReq) as JwtPayload;
     return res.status(200).json({ role: user.dataValues.role });
   }
 
   initService(): UserService {
-    return new UserService();
+    return this._service;
   }
 
   initRoutes(): Router {
     this.router.get(
       '/role',
       TokenHandler.validateToken,
-      (req, res) => this.getRoleFromToken(req, res),
+      (req, res) => UserController.getRoleFromToken(req, res),
     );
     this.router.post('/', (req, res) => this.login(req, res));
     return this.router;
