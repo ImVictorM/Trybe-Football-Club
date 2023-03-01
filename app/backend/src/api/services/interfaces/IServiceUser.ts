@@ -1,6 +1,11 @@
-export interface IUser {
+export interface IUserFromReq {
   email: string,
   password: string,
+}
+
+export interface IUserFromDB extends IUserFromReq {
+  role: string,
+  username: string,
 }
 
 export interface IToken {
@@ -8,5 +13,5 @@ export interface IToken {
 }
 
 export default interface IServiceUser {
-  login(user: IUser): Promise<IToken>;
+  login(user: IUserFromReq): Promise<IToken>;
 }

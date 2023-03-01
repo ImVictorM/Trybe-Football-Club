@@ -1,6 +1,6 @@
 import * as express from 'express';
 import TeamController from './api/controllers/TeamController';
-import ErrorHandler from './api/middlewares/ErrorHandler';
+import { ErrorHandler } from './api/middlewares';
 
 import UserController from './api/controllers/UserController';
 

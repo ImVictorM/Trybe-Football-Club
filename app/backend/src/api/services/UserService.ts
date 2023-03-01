@@ -1,7 +1,7 @@
 /* eslint class-methods-use-this: ["error", {"exceptMethods": ["validateUserDataFromRequest"]}] */
 import { ModelStatic } from 'sequelize';
 import UserModel from '../../database/models/UserModel';
-import IServiceUser, { IToken, IUser } from './interfaces/IServiceUser';
+import IServiceUser, { IToken, IUserFromDB, IUserFromReq } from './interfaces/IServiceUser';
 import AuthService from './AuthService';
 import userPattern from './schemas/userPattern';
 import { InvalidUserData, InvalidUserRequest } from '../errors';
@@ -9,7 +9,7 @@ import { InvalidUserData, InvalidUserRequest } from '../errors';
 class UserService implements IServiceUser {
   private userModel: ModelStatic<UserModel> = UserModel;
 
-  private validateUserDataFromRequest(userFromRequest: IUser): void {
+  private validateUserDataFromRequest(userFromRequest: IUserFromReq): void {
     const { error: joiError } = userPattern.validate(userFromRequest);
 
     if (joiError) {
@@ -20,14 +20,14 @@ class UserService implements IServiceUser {
     }
   }
 
-  private async getUserByEmail(email: string): Promise<IUser | null> {
+  private async getUserByEmail(email: string): Promise<IUserFromDB | null> {
     const user = await this.userModel.findOne({
       where: { email },
     });
     return user || null;
   }
 
-  public async login(userFromRequest: IUser): Promise<IToken> {
+  public async login(userFromRequest: IUserFromReq): Promise<IToken> {
     const { email, password } = userFromRequest;
 
     this.validateUserDataFromRequest(userFromRequest);
