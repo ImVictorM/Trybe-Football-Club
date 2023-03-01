@@ -1,5 +1,10 @@
 import * as express from 'express';
 import TeamController from './api/controllers/TeamController';
+import ErrorHandler from './api/middlewares/ErrorHandler';
+
+import UserController from './api/controllers/UserController';
+
+import 'express-async-errors';
 
 class App {
   public app: express.Express;
@@ -12,6 +17,8 @@ class App {
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
     this.useRoutes();
+    // ErrorHandler must be the last to be called
+    this.app.use(ErrorHandler.handleError);
   }
 
   private config():void {
@@ -28,6 +35,7 @@ class App {
 
   private useRoutes(): void {
     this.app.use('/teams', new TeamController().initRoutes());
+    this.app.use('/login', new UserController().initRoutes());
   }
 
   public start(PORT: string | number):void {
