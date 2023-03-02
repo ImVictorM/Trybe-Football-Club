@@ -43,8 +43,33 @@ export const ALL_MATCHES_FROM_DB = [
   },
 ];
 
-export const IN_PROGRESS_MATCHES_FROM_DB = ALL_MATCHES_FROM_DB
-  .filter((match) => match.inProgress === true);
-  
-export const NOT_IN_PROGRESS_MATCHES_FROM_DB = ALL_MATCHES_FROM_DB
-  .filter((match) => match.inProgress === false);
+export const IN_PROGRESS_MATCHES_FROM_DB = ALL_MATCHES_FROM_DB.filter(
+  (match) => match.inProgress === true
+);
+
+export const NOT_IN_PROGRESS_MATCHES_FROM_DB = ALL_MATCHES_FROM_DB.filter(
+  (match) => match.inProgress === false
+);
+
+export const NEW_MATCH_FROM_REQ = {
+  homeTeamId: 16,
+  awayTeamId: 8,
+  homeTeamGoals: 2,
+  awayTeamGoals: 2,
+};
+
+export const NEW_MATCH_FROM_DB = {
+  id: 6,
+  homeTeamId: 16,
+  awayTeamId: 8,
+  homeTeamGoals: 2,
+  awayTeamGoals: 2,
+};
+
+export const MATCH_WITH_SAME_TEAMS = {
+  id: 7,
+  homeTeamId: 2,
+  awayTeamId: 2,
+  homeTeamGoals: 1,
+  awayTeamGoals: 5,
+}
