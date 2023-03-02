@@ -1,8 +1,6 @@
 import * as express from 'express';
-import TeamController from './api/controllers/TeamController';
+import { TeamController, UserController, MatchController } from './api/controllers';
 import { ErrorHandler } from './api/middlewares';
-
-import UserController from './api/controllers/UserController';
 
 import 'express-async-errors';
 
@@ -36,6 +34,7 @@ class App {
   private useRoutes(): void {
     this.app.use('/teams', new TeamController().initRoutes());
     this.app.use('/login', new UserController().initRoutes());
+    this.app.use('/matches', new MatchController().initRoutes());
   }
 
   public start(PORT: string | number):void {
