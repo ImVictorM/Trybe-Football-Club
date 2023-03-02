@@ -1,8 +1,7 @@
 import { Request, Response, Router } from 'express';
 import { JwtPayload } from 'jsonwebtoken';
 import { TokenHandler } from '../middlewares';
-import { UserService } from '../services';
-import AuthService from '../services/AuthService';
+import { UserService, AuthService } from '../services';
 import { IUserFromReq } from '../services/interfaces/IServiceUser';
 import Controller from './Controller';
 

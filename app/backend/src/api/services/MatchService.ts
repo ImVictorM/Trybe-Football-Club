@@ -17,6 +17,15 @@ class MatchService implements IServiceMatch {
     });
     return matches;
   }
+
+  public async finishMatch(matchId: number): Promise<void> {
+    const finishValue = { inProgress: false };
+    await this.matchModel.update(finishValue, {
+      where: {
+        id: matchId,
+      },
+    });
+  }
 }
 
 export default MatchService;

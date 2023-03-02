@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 import { MatchService } from '../services';
 import Controller from './Controller';
+import { TokenHandler } from '../middlewares';
 
 class MatchController extends Controller <MatchService> {
   constructor() {
@@ -23,8 +24,19 @@ class MatchController extends Controller <MatchService> {
     return res.status(200).json(matches);
   }
 
+  private async finishMatch(req: Request, res: Response) {
+    const matchId = Number(req.params.id);
+    await this.service.finishMatch(matchId);
+    return res.status(200).json({ message: 'Finished' });
+  }
+
   initRoutes(): Router {
     this.router.get('/', (req, res) => this.getAllMatches(req, res));
+    this.router.patch(
+      '/:id/finish',
+      TokenHandler.validateToken,
+      (req, res) => this.finishMatch(req, res),
+    );
     return this.router;
   }
 }
