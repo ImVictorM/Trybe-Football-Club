@@ -89,7 +89,7 @@ describe("Test match-related routes", function () {
       expect(chaiHttpResponse.status).to.be.equal(201);
     });
 
-    it("Can\t create a match containing same teams", async function () {
+    it("Can\'t create a match containing same teams", async function () {
       chaiHttpResponse = await chai
         .request(app)
         .post("/matches")

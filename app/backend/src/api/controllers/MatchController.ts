@@ -61,6 +61,7 @@ class MatchController extends Controller <MatchService> {
 
     this.router.post(
       '/',
+      TokenHandler.validateToken,
       (req, res) => this.registerNewMatch(req, res),
     );
     return this.router;

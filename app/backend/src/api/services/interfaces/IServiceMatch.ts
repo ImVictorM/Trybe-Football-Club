@@ -9,6 +9,7 @@ export interface NewMatch extends PatchMatch {
   id?: number;
   homeTeamId: number;
   awayTeamId: number;
+  inProgress?: boolean;
 }
 
 export default interface IServiceMatch {
