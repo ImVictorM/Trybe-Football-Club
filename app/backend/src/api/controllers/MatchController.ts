@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express';
 import { MatchService } from '../services';
 import Controller from './Controller';
 import { TokenHandler } from '../middlewares';
-import { MatchFromReq } from '../services/interfaces/IServiceMatch';
+import { NewMatch, PatchMatch } from '../services/interfaces/IServiceMatch';
 
 class MatchController extends Controller <MatchService> {
   constructor() {
@@ -33,16 +33,19 @@ class MatchController extends Controller <MatchService> {
 
   private async updateInProgressMatchGoals(req: Request, res: Response) {
     const matchId = Number(req.params.id);
-    const matchGoals = req.body as MatchFromReq;
+    const matchGoals = req.body as PatchMatch;
     const affectedRows = await this.service.updateInProgressMatchGoals(matchId, matchGoals);
     return res.status(200).json({ affectedRows });
   }
 
+  private async registerNewMatch(req: Request, res: Response) {
+    const newMatch = req.body as NewMatch;
+    const createdMatch = await this.service.registerNewMatch(newMatch);
+    return res.status(201).json(createdMatch);
+  }
+
   initRoutes(): Router {
-    this.router.get(
-      '/',
-      (req, res) => this.getAllMatches(req, res),
-    );
+    this.router.get('/', (req, res) => this.getAllMatches(req, res));
 
     this.router.patch(
       '/:id',
@@ -54,6 +57,11 @@ class MatchController extends Controller <MatchService> {
       '/:id/finish',
       TokenHandler.validateToken,
       (req, res) => this.finishMatch(req, res),
+    );
+
+    this.router.post(
+      '/',
+      (req, res) => this.registerNewMatch(req, res),
     );
     return this.router;
   }
