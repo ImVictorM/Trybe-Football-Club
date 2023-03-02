@@ -9,8 +9,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
 
-      team_name: {
+      teamName: {
         type: Sequelize.STRING,
+        field: 'team_name',
       }
     });
   },
