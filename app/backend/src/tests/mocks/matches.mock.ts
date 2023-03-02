@@ -64,6 +64,7 @@ export const NEW_MATCH_FROM_DB = {
   awayTeamId: 8,
   homeTeamGoals: 2,
   awayTeamGoals: 2,
+  inProgress: true
 };
 
 export const MATCH_WITH_SAME_TEAMS = {

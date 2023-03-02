@@ -10,7 +10,7 @@ chai.use(chaiHttp);
 
 import { app } from "../app";
 import MatchModel from "../database/models/MatchModel";
-import TeamModel from '../database/models/TeamModel';
+import TeamModel from "../database/models/TeamModel";
 import {
   ALL_MATCHES_FROM_DB,
   IN_PROGRESS_MATCHES_FROM_DB,
@@ -19,7 +19,7 @@ import {
   NEW_MATCH_FROM_REQ,
   NOT_IN_PROGRESS_MATCHES_FROM_DB,
 } from "./mocks/matches.mock";
-import { ID_ONE_TEAM_MOCK } from './mocks/teams.mock';
+import { ID_ONE_TEAM_MOCK } from "./mocks/teams.mock";
 
 const { expect } = chai;
 
@@ -75,6 +75,11 @@ describe("Test match-related routes", function () {
   });
 
   describe("Route POST /matches", function () {
+    // this route needs a token
+    beforeEach(function () {
+      sandbox.stub(jwt, "verify").returns();
+    });
+
     it("Can create a new match and return it", async function () {
       sinon
         .stub(MatchModel, "create")
@@ -83,16 +88,18 @@ describe("Test match-related routes", function () {
       chaiHttpResponse = await chai
         .request(app)
         .post("/matches")
+        .auth("token", { type: "bearer" })
         .send(NEW_MATCH_FROM_REQ);
 
       expect(chaiHttpResponse.body).to.be.deep.equal(NEW_MATCH_FROM_DB);
       expect(chaiHttpResponse.status).to.be.equal(201);
     });
 
-    it("Can\'t create a match containing same teams", async function () {
+    it("Can't create a match containing same teams", async function () {
       chaiHttpResponse = await chai
         .request(app)
         .post("/matches")
+        .auth("token", { type: "bearer" })
         .send(MATCH_WITH_SAME_TEAMS);
 
       expect(chaiHttpResponse.body).to.be.deep.equal({
@@ -102,13 +109,17 @@ describe("Test match-related routes", function () {
     });
 
     it("Can't create a match with any invalid team", async function () {
-      sandbox.stub(TeamModel, 'findByPk')
-        .onFirstCall().resolves(null)
-        .onSecondCall().resolves(ID_ONE_TEAM_MOCK as TeamModel);
+      sandbox
+        .stub(TeamModel, "findByPk")
+        .onFirstCall()
+        .resolves(null)
+        .onSecondCall()
+        .resolves(ID_ONE_TEAM_MOCK as TeamModel);
 
       chaiHttpResponse = await chai
         .request(app)
         .post("/matches")
+        .auth("token", { type: "bearer" })
         .send(NEW_MATCH_FROM_REQ);
 
       expect(chaiHttpResponse.body).to.be.deep.equal({
