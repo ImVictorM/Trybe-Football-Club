@@ -7,8 +7,19 @@ class MatchController extends Controller <MatchService> {
     super(new MatchService());
   }
 
-  private async getAllMatches(_req: Request, res: Response) {
-    const matches = await this.service.findAllMatches();
+  private static convertStringToBoolean(query: string | undefined): boolean | undefined {
+    if (query !== undefined) {
+      // convert string to boolean
+      return JSON.parse(query);
+    }
+
+    return query;
+  }
+
+  private async getAllMatches(req: Request, res: Response) {
+    const stringInProgress = req.query.inProgress as string | undefined;
+    const inProgress = MatchController.convertStringToBoolean(stringInProgress);
+    const matches = await this.service.findAllMatches(inProgress);
     return res.status(200).json(matches);
   }
 

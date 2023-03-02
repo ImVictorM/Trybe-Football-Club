@@ -6,8 +6,10 @@ import IServiceMatch from './interfaces/IServiceMatch';
 class MatchService implements IServiceMatch {
   private matchModel: ModelStatic<MatchModel> = MatchModel;
 
-  findAllMatches(): Promise<MatchModel[]> {
-    const matches = this.matchModel.findAll({
+  public async findAllMatches(inProgress?: boolean): Promise<MatchModel[]> {
+    const inProgressClause = inProgress !== undefined ? { where: { inProgress } } : null;
+    const matches = await this.matchModel.findAll({
+      ...inProgressClause,
       include: [
         { model: TeamModel, as: 'homeTeam' },
         { model: TeamModel, as: 'awayTeam' },
