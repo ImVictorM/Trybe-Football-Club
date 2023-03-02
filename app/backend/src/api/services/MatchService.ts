@@ -1,7 +1,7 @@
 import { ModelStatic } from 'sequelize';
 import TeamModel from '../../database/models/TeamModel';
 import MatchModel from '../../database/models/MatchModel';
-import IServiceMatch from './interfaces/IServiceMatch';
+import IServiceMatch, { MatchFromReq } from './interfaces/IServiceMatch';
 
 class MatchService implements IServiceMatch {
   private matchModel: ModelStatic<MatchModel> = MatchModel;
@@ -25,6 +25,20 @@ class MatchService implements IServiceMatch {
         id: matchId,
       },
     });
+  }
+
+  public async updateMatchGoals(
+    matchId: number,
+    matchGoals: MatchFromReq,
+  ): Promise<number> {
+    const response = await this.matchModel.update(matchGoals, {
+      where: {
+        id: matchId,
+        inProgress: true,
+      },
+    });
+    const affectedRows = response[0];
+    return affectedRows;
   }
 }
 

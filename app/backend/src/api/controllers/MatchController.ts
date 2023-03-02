@@ -2,6 +2,7 @@ import { Request, Response, Router } from 'express';
 import { MatchService } from '../services';
 import Controller from './Controller';
 import { TokenHandler } from '../middlewares';
+import { MatchFromReq } from '../services/interfaces/IServiceMatch';
 
 class MatchController extends Controller <MatchService> {
   constructor() {
@@ -30,8 +31,25 @@ class MatchController extends Controller <MatchService> {
     return res.status(200).json({ message: 'Finished' });
   }
 
+  private async updateMatchGoals(req: Request, res: Response) {
+    const matchId = Number(req.params.id);
+    const matchGoals = req.body as MatchFromReq;
+    const affectedRows = await this.service.updateMatchGoals(matchId, matchGoals);
+    return res.status(200).json({ affectedRows });
+  }
+
   initRoutes(): Router {
-    this.router.get('/', (req, res) => this.getAllMatches(req, res));
+    this.router.get(
+      '/',
+      (req, res) => this.getAllMatches(req, res),
+    );
+
+    this.router.patch(
+      '/:id',
+      TokenHandler.validateToken,
+      (req, res) => this.updateMatchGoals(req, res),
+    );
+
     this.router.patch(
       '/:id/finish',
       TokenHandler.validateToken,
