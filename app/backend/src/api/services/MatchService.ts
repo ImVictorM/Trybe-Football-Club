@@ -27,7 +27,7 @@ class MatchService implements IServiceMatch {
     });
   }
 
-  public async updateMatchGoals(
+  public async updateInProgressMatchGoals(
     matchId: number,
     matchGoals: MatchFromReq,
   ): Promise<number> {

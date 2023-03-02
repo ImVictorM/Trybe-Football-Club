@@ -8,5 +8,5 @@ export interface MatchFromReq {
 export default interface IServiceMatch {
   findAllMatches(progress: boolean): Promise<MatchModel[]>;
   finishMatch(matchId: number): Promise<void>;
-  updateMatchGoals(matchId: number, matchGoals: MatchFromReq): Promise<number>;
+  updateInProgressMatchGoals(matchId: number, matchGoals: MatchFromReq): Promise<number>;
 }

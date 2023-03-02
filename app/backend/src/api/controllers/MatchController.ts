@@ -31,10 +31,10 @@ class MatchController extends Controller <MatchService> {
     return res.status(200).json({ message: 'Finished' });
   }
 
-  private async updateMatchGoals(req: Request, res: Response) {
+  private async updateInProgressMatchGoals(req: Request, res: Response) {
     const matchId = Number(req.params.id);
     const matchGoals = req.body as MatchFromReq;
-    const affectedRows = await this.service.updateMatchGoals(matchId, matchGoals);
+    const affectedRows = await this.service.updateInProgressMatchGoals(matchId, matchGoals);
     return res.status(200).json({ affectedRows });
   }
 
@@ -47,7 +47,7 @@ class MatchController extends Controller <MatchService> {
     this.router.patch(
       '/:id',
       TokenHandler.validateToken,
-      (req, res) => this.updateMatchGoals(req, res),
+      (req, res) => this.updateInProgressMatchGoals(req, res),
     );
 
     this.router.patch(

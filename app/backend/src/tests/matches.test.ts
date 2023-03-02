@@ -1,5 +1,6 @@
 import * as chai from 'chai';
 import * as sinon from 'sinon';
+import * as jwt from 'jsonwebtoken';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 
@@ -60,6 +61,36 @@ describe('Test match-related routes', function () {
         .get('/matches?inProgress=false');
       
       expect(chaiHttpResponse.body).to.be.deep.equal(NOT_IN_PROGRESS_MATCHES_FROM_DB);
+      expect(chaiHttpResponse.status).to.be.equal(200);
+    });
+  });
+
+  describe('Route: PATCH /matches/:id', function () {
+    it('Returns the correspondent affected rows on update of a match', async function () {
+      sandbox.stub(MatchModel, 'update').returns([2] as any);
+      sandbox.stub(jwt, 'verify').returns();
+
+      chaiHttpResponse = await chai
+        .request(app)
+        .patch('/matches/2')
+        .auth('token', { type:'bearer' });
+
+      expect(chaiHttpResponse.body).to.be.deep.equal({ affectedRows: 2 });
+      expect(chaiHttpResponse.status).to.be.equal(200);
+    });
+  });
+
+  describe('Route: PATCH /matches/:id/finish', function () {
+    it('Returns a message when finishes a match', async function () {
+      sandbox.stub(MatchModel, 'update').resolves();
+      sandbox.stub(jwt, 'verify').returns();
+
+      chaiHttpResponse = await chai
+        .request(app)
+        .patch('/matches/2/finish')
+        .auth('token', { type:'bearer' });
+
+      expect(chaiHttpResponse.body).to.be.deep.equal({ message: 'Finished' });
       expect(chaiHttpResponse.status).to.be.equal(200);
     });
   });
