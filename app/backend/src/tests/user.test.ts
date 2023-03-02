@@ -29,7 +29,7 @@ describe('Test user-related routes', function () {
     sandbox.restore();
   });
 
-  describe('Route: /login', function () {
+  describe('Route: POST /login', function () {
     it('Can log in with valid user and returns a token', async function () {
       sandbox.stub(UserModel, 'findOne').resolves(VALID_USER_FROM_DB as UserModel);
 
@@ -107,7 +107,7 @@ describe('Test user-related routes', function () {
     });
   });
   
-  describe('Route: /login/role', function () {
+  describe('Route: GET /login/role', function () {
     it('Can\'t get user role without an authorization token', async function () {
       chaiHttpResponse = await chai
         .request(app)
