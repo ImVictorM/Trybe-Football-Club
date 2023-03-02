@@ -4,12 +4,11 @@ abstract class Controller<ServiceType> {
   protected router: Router;
   protected service: ServiceType;
 
-  constructor() {
+  constructor(service: ServiceType) {
     this.router = Router();
-    this.service = this.initService();
+    this.service = service;
   }
 
-  abstract initService(): ServiceType;
   abstract initRoutes(): Router;
 }
 

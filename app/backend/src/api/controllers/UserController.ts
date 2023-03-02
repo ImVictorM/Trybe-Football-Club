@@ -7,7 +7,9 @@ import { IUserFromReq } from '../services/interfaces/IServiceUser';
 import Controller from './Controller';
 
 class UserController extends Controller<UserService> {
-  protected _service = new UserService();
+  constructor() {
+    super(new UserService());
+  }
 
   public async login(req: Request, res: Response) {
     const user = req.body as IUserFromReq;
@@ -20,10 +22,6 @@ class UserController extends Controller<UserService> {
     const tokenFromReq = req.headers.authorization as string;
     const user = AuthService.checkUserToken(tokenFromReq) as JwtPayload;
     return res.status(200).json({ role: user.dataValues.role });
-  }
-
-  initService(): UserService {
-    return this._service;
   }
 
   initRoutes(): Router {

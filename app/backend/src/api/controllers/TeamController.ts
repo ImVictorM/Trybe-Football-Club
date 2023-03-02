@@ -4,7 +4,9 @@ import { TeamService } from '../services';
 import Controller from './Controller';
 
 class TeamController extends Controller<TeamService> {
-  private _service = new TeamService();
+  constructor() {
+    super(new TeamService());
+  }
 
   public async getAllTeams(_req: Request, res: Response) {
     const teams = await this.service.findAllTeams();
@@ -15,10 +17,6 @@ class TeamController extends Controller<TeamService> {
     const { id } = req.params;
     const team = await this.service.findTeamById(Number(id));
     return res.status(200).json(team);
-  }
-
-  initService(): TeamService {
-    return this._service;
   }
 
   initRoutes(): Router {
