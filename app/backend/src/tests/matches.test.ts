@@ -9,7 +9,11 @@ chai.use(chaiHttp);
 
 import { app } from '../app';
 import MatchModel from '../database/models/MatchModel';
-import { ALL_MATCHES_FROM_DB } from './mocks/matches.mock';
+import { 
+  ALL_MATCHES_FROM_DB, 
+  IN_PROGRESS_MATCHES_FROM_DB, 
+  NOT_IN_PROGRESS_MATCHES_FROM_DB 
+} from './mocks/matches.mock';
 
 const { expect } = chai;
 
@@ -30,6 +34,32 @@ describe('Test match-related routes', function () {
         .get('/matches');
       
       expect(chaiHttpResponse.body).to.be.deep.equal(ALL_MATCHES_FROM_DB);
+      expect(chaiHttpResponse.status).to.be.equal(200);
+    });
+
+    it('Can get all matches in progress', async function () {
+      sandbox
+        .stub(MatchModel, 'findAll')
+        .resolves(IN_PROGRESS_MATCHES_FROM_DB as unknown as MatchModel[]);
+
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/matches?inProgress=true');
+      
+      expect(chaiHttpResponse.body).to.be.deep.equal(IN_PROGRESS_MATCHES_FROM_DB);
+      expect(chaiHttpResponse.status).to.be.equal(200);
+    });
+
+    it('Can get all matches not in progress', async function () {
+      sandbox
+      .stub(MatchModel, 'findAll')
+      .resolves(NOT_IN_PROGRESS_MATCHES_FROM_DB as unknown as MatchModel[]);
+
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/matches?inProgress=false');
+      
+      expect(chaiHttpResponse.body).to.be.deep.equal(NOT_IN_PROGRESS_MATCHES_FROM_DB);
       expect(chaiHttpResponse.status).to.be.equal(200);
     });
   });

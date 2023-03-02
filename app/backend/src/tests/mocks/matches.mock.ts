@@ -27,4 +27,24 @@ export const ALL_MATCHES_FROM_DB = [
       teamName: "Internacional",
     },
   },
+  {
+    id: 42,
+    homeTeamId: 6,
+    homeTeamGoals: 1,
+    awayTeamId: 1,
+    awayTeamGoals: 0,
+    inProgress: true,
+    homeTeam: {
+      teamName: "Ferroviária",
+    },
+    awayTeam: {
+      teamName: "Avaí/Kindermann",
+    },
+  },
 ];
+
+export const IN_PROGRESS_MATCHES_FROM_DB = ALL_MATCHES_FROM_DB
+  .filter((match) => match.inProgress === true);
+  
+export const NOT_IN_PROGRESS_MATCHES_FROM_DB = ALL_MATCHES_FROM_DB
+  .filter((match) => match.inProgress === false);
