@@ -1,13 +1,13 @@
 import { ModelStatic } from 'sequelize';
 import MatchModel from '../../database/models/MatchModel';
-import IServiceMatch, { NewMatch, PatchMatch } from './interfaces/IServiceMatch';
+import IServiceMatch, { NewMatch, PatchMatch, Match } from './interfaces/IServiceMatch';
 import { EqualTeamsException, InvalidTeamException } from '../errors';
 import TeamService from './TeamService';
 
 class MatchService extends TeamService implements IServiceMatch {
-  private matchModel: ModelStatic<MatchModel> = MatchModel;
+  protected matchModel: ModelStatic<MatchModel> = MatchModel;
 
-  public async findAllMatches(inProgress?: boolean): Promise<MatchModel[]> {
+  public async findAllMatches(inProgress?: boolean): Promise<Match[]> {
     const inProgressClause = inProgress !== undefined ? { where: { inProgress } } : null;
     const matches = await this.matchModel.findAll({
       ...inProgressClause,
@@ -16,7 +16,7 @@ class MatchService extends TeamService implements IServiceMatch {
         { model: this.teamModel, as: 'awayTeam' },
       ],
     });
-    return matches;
+    return matches as unknown as Match[];
   }
 
   public async finishMatch(matchId: number): Promise<void> {
