@@ -28,10 +28,22 @@ SELECT
       WHEN matches.home_team_goals < matches.away_team_goals THEN 0
       ELSE 1
     END
-  ) as totalPoints
+  ) as totalPoints,
+  
+  ROUND(
+    SUM(
+      CASE
+        WHEN matches.home_team_goals > matches.away_team_goals THEN 3
+        WHEN matches.home_team_goals < matches.away_team_goals THEN 0
+        ELSE 1
+      END
+    ) / (SUM(1) * 3) * 100, 2
+  ) as efficiency,
+  ((SUM(matches.home_team_goals)) - (SUM(matches.away_team_goals))) as goalsBalance
 FROM teams
 INNER JOIN matches ON home_team_id = teams.id
-GROUP BY teams.team_name;
+WHERE matches.in_progress = false
+GROUP BY teams.team_name
+ORDER BY totalPoints DESC, totalVictories DESC, goalsBalance DESC, goalsFavor DESC, goalsOwn DESC;
 `;
-
 export default SELECT_LEADERBOARD_QUERY;

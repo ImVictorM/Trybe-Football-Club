@@ -7,6 +7,8 @@ export interface TeamInfo {
   totalLosses: number;
   goalsFavor: number;
   goalsOwn: number;
+  goalsBalance?: number;
+  efficiency?: number;
 }
 
 export default interface IServiceLeaderboard {

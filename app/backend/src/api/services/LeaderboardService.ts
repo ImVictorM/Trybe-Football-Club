@@ -10,8 +10,9 @@ class LeaderboardService extends MatchService {
   public async getHomeLeaderboard(): Promise<TeamInfo[]> {
     const leaderboard = await this.sequelize.query(SELECT_LEADERBOARD_QUERY, {
       type: QueryTypes.SELECT,
-    });
-    return leaderboard as TeamInfo[];
+    }) as TeamInfo[];
+
+    return leaderboard;
   }
 }
 
