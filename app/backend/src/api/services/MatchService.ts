@@ -1,12 +1,11 @@
 import { ModelStatic } from 'sequelize';
-import TeamModel from '../../database/models/TeamModel';
 import MatchModel from '../../database/models/MatchModel';
 import IServiceMatch, { NewMatch, PatchMatch } from './interfaces/IServiceMatch';
 import { EqualTeamsException, InvalidTeamException } from '../errors';
+import TeamService from './TeamService';
 
-class MatchService implements IServiceMatch {
+class MatchService extends TeamService implements IServiceMatch {
   private matchModel: ModelStatic<MatchModel> = MatchModel;
-  private teamModel: ModelStatic<TeamModel> = TeamModel;
 
   public async findAllMatches(inProgress?: boolean): Promise<MatchModel[]> {
     const inProgressClause = inProgress !== undefined ? { where: { inProgress } } : null;
@@ -52,8 +51,8 @@ class MatchService implements IServiceMatch {
 
   private async validateTeamsExists(newMatch: NewMatch): Promise<void> {
     const { awayTeamId, homeTeamId } = newMatch;
-    const awayTeam = await this.teamModel.findByPk(awayTeamId);
-    const homeTeam = await this.teamModel.findByPk(homeTeamId);
+    const awayTeam = await this.findTeamById(awayTeamId);
+    const homeTeam = await this.findTeamById(homeTeamId);
     if (!awayTeam || !homeTeam) {
       throw new InvalidTeamException();
     }
