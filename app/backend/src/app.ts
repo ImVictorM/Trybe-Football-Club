@@ -3,6 +3,7 @@ import { TeamController, UserController, MatchController } from './api/controlle
 import { ErrorHandler } from './api/middlewares';
 
 import 'express-async-errors';
+import LeaderboardController from './api/controllers/LeaderboardController';
 
 class App {
   public app: express.Express;
@@ -35,6 +36,7 @@ class App {
     this.app.use('/teams', new TeamController().initRoutes());
     this.app.use('/login', new UserController().initRoutes());
     this.app.use('/matches', new MatchController().initRoutes());
+    this.app.use('/leaderboard', new LeaderboardController().initRoutes());
   }
 
   public start(PORT: string | number):void {
