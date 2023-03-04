@@ -12,5 +12,5 @@ export interface TeamInfo {
 }
 
 export default interface IServiceLeaderboard {
-  getHomeLeaderboard(): Promise<TeamInfo[]>;
+  getLeaderboard(path: '/home' | '/away'): Promise<TeamInfo[]>;
 }

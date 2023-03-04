@@ -7,13 +7,15 @@ class LeaderboardController extends Controller<LeaderboardService> {
     super(new LeaderboardService());
   }
 
-  private async getHomeLeaderboard(_req: Request, res: Response) {
-    const homeLeaderboard = await this.service.getHomeLeaderboard();
+  private async getLeaderboard(req: Request, res: Response) {
+    const path = req.path as '/home' | '/away';
+    const homeLeaderboard = await this.service.getLeaderboard(path);
     return res.status(200).json(homeLeaderboard);
   }
 
   initRoutes(): Router {
-    this.router.get('/home', (req, res) => this.getHomeLeaderboard(req, res));
+    this.router.get('/home', (req, res) => this.getLeaderboard(req, res));
+    this.router.get('/away', (req, res) => this.getLeaderboard(req, res));
     return this.router;
   }
 }
