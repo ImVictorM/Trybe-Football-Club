@@ -7,8 +7,11 @@ import { Response } from "superagent";
 
 chai.use(chaiHttp);
 import { app } from "../app";
+import sequelize from '../database/models';
 
 const { expect } = chai;
+
+import { HOME_LEADERBOARD_FROM_DB } from './mocks/leaderboard.mock';
 
 describe("Test leaderboard-related routes", function () {
   let chaiHttpResponse: Response;
@@ -24,7 +27,16 @@ describe("Test leaderboard-related routes", function () {
 
   describe("Route: GET /leaderboard/home", function () {
     it('Can get all home leaderboard', async function () {
+      //  HOME_LEADERBOARD_FROM_DB real type: TeamInfo[], 
+      //  Wrong conversion needed because in function was used QueryTypes, which returns Obj[];
+      sandbox.stub(sequelize, 'query').resolves(HOME_LEADERBOARD_FROM_DB as [unknown[], unknown]);  
+
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/leaderboard/home');
       
+      expect(chaiHttpResponse.body).to.be.deep.equal(HOME_LEADERBOARD_FROM_DB);
+      expect(chaiHttpResponse.status).to.be.equal(200);
     });
   });
 
