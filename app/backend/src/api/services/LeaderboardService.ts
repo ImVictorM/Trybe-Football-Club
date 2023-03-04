@@ -2,6 +2,7 @@ import { QueryTypes } from 'sequelize';
 import IServiceLeaderboard, { TeamInfo } from './interfaces/IServiceLeaderboard';
 import sequelize from '../../database/models';
 import { SELECT_AWAY_LEADERBOARD_QUERY, SELECT_HOME_LEADERBOARD_QUERY } from './utils/rawQueries';
+import { InvalidPathException } from '../errors';
 
 class LeaderboardService implements IServiceLeaderboard {
   private sequelize = sequelize;
@@ -22,7 +23,7 @@ class LeaderboardService implements IServiceLeaderboard {
       case '/away':
         return SELECT_AWAY_LEADERBOARD_QUERY;
       default:
-        throw new Error('this path doesn\'t exist');
+        throw new InvalidPathException();
     }
   }
 }
