@@ -11,6 +11,8 @@ export interface TeamInfo {
   efficiency?: number;
 }
 
+export type LeaderboardPath = '/home' | '/away' | '/';
+
 export default interface IServiceLeaderboard {
-  getLeaderboard(path: '/home' | '/away'): Promise<TeamInfo[]>;
+  getLeaderboard(path: LeaderboardPath): Promise<TeamInfo[]>;
 }
