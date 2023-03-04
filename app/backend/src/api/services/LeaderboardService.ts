@@ -7,22 +7,23 @@ class LeaderboardService implements IServiceLeaderboard {
   private sequelize = sequelize;
 
   public async getLeaderboard(path: '/home' | '/away'): Promise<TeamInfo[]> {
-    let query: string;
-    switch (path) {
-      case '/home':
-        query = SELECT_HOME_LEADERBOARD_QUERY;
-        break;
-      case '/away':
-        query = SELECT_AWAY_LEADERBOARD_QUERY;
-        break;
-      default:
-        throw new Error('this path doesn\'t exist');
-    }
+    const query = LeaderboardService.getQueryByLeaderboardPath(path);
     const leaderboard = await this.sequelize.query(query, {
       type: QueryTypes.SELECT,
     }) as TeamInfo[];
 
     return leaderboard;
+  }
+
+  private static getQueryByLeaderboardPath(path: '/home' | '/away'): string {
+    switch (path) {
+      case '/home':
+        return SELECT_HOME_LEADERBOARD_QUERY;
+      case '/away':
+        return SELECT_AWAY_LEADERBOARD_QUERY;
+      default:
+        throw new Error('this path doesn\'t exist');
+    }
   }
 }
 
