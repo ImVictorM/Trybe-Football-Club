@@ -6,7 +6,6 @@ import {
   SELECT_HOME_LEADERBOARD_QUERY,
   SELECT_LEADERBOARD_QUERY,
 } from './utils/rawQueries';
-import { InvalidPathException } from '../errors';
 
 class LeaderboardService implements IServiceLeaderboard {
   private sequelize = sequelize;
@@ -22,14 +21,12 @@ class LeaderboardService implements IServiceLeaderboard {
 
   private static getQueryByLeaderboardPath(path: LeaderboardPath): string {
     switch (path) {
-      case '/':
-        return SELECT_LEADERBOARD_QUERY;
       case '/home':
         return SELECT_HOME_LEADERBOARD_QUERY;
       case '/away':
         return SELECT_AWAY_LEADERBOARD_QUERY;
       default:
-        throw new InvalidPathException();
+        return SELECT_LEADERBOARD_QUERY;
     }
   }
 }
