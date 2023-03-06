@@ -192,6 +192,6 @@ The back end will be running on http://localhost:3001 (PORT 3001).
 
 Click here to export automatically:
 
-[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Blog%20API&uri=https%3A%2F%2Fraw.githubusercontent.com%2FImVictorM%2FBlog-API%2Fmain%2FinsomniaEndpoints.json)
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=TFC&uri=https%3A%2F%2Fraw.githubusercontent.com%2FImVictorM%2FTrybe-Football-Club%2FREADME-construction%2FinsomniaRoutes.json)
 
-Or just import the file `insomniaEndpoints.json` inside your environment: https://docs.insomnia.rest/insomnia/import-export-data
+Or just import the file `insomniaRoutes.json` inside your environment: https://docs.insomnia.rest/insomnia/import-export-data
