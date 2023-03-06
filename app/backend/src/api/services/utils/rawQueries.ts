@@ -116,7 +116,7 @@ SELECT
     CASE 
       WHEN teams.id = matches.away_team_id THEN (
         CASE
-          WHEN matches.away_team_goals > matches.away_team_goals THEN 1
+          WHEN matches.away_team_goals > matches.home_team_goals THEN 1
           ELSE 0
         END
       )
@@ -205,7 +205,7 @@ FROM teams
 INNER JOIN matches ON teams.id = ( 
   CASE 
     WHEN teams.id = matches.away_team_id THEN matches.away_team_id
-        ELSE matches.home_team_id
+    ELSE matches.home_team_id
   END
 )
 WHERE matches.in_progress = false
