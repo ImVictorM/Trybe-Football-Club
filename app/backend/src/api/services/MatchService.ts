@@ -42,6 +42,13 @@ class MatchService extends TeamService implements IServiceMatch {
     return affectedRows;
   }
 
+  public async registerNewMatch(newMatch: Omit<NewMatch, 'id'>): Promise<NewMatch> {
+    MatchService.validateMatchTeamsAreEqual(newMatch);
+    await this.validateTeamsExists(newMatch);
+    const createdMatch = await this.matchModel.create({ ...newMatch, inProgress: true });
+    return createdMatch;
+  }
+
   private static validateMatchTeamsAreEqual(newMatch: NewMatch): void {
     const { awayTeamId, homeTeamId } = newMatch;
     if (awayTeamId === homeTeamId) {
@@ -56,13 +63,6 @@ class MatchService extends TeamService implements IServiceMatch {
     if (!awayTeam || !homeTeam) {
       throw new InvalidTeamException();
     }
-  }
-
-  public async registerNewMatch(newMatch: Omit<NewMatch, 'id'>): Promise<NewMatch> {
-    MatchService.validateMatchTeamsAreEqual(newMatch);
-    await this.validateTeamsExists(newMatch);
-    const createdMatch = await this.matchModel.create({ ...newMatch, inProgress: true });
-    return createdMatch;
   }
 }
 

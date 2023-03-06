@@ -8,24 +8,6 @@ import { InvalidUserData, InvalidUserRequest } from '../errors';
 class UserService implements IServiceUser {
   private userModel: ModelStatic<UserModel> = UserModel;
 
-  static validateUserDataFromRequest(userFromRequest: IUserFromReq): void {
-    const { error: joiError } = userPattern.validate(userFromRequest);
-
-    if (joiError) {
-      const joiErrorMessage = joiError.details[0].message;
-      const error = (joiErrorMessage === 'All fields must be filled')
-        ? new InvalidUserRequest() : new InvalidUserData();
-      throw error;
-    }
-  }
-
-  private async getUserByEmail(email: string): Promise<IUserFromDB | null> {
-    const user = await this.userModel.findOne({
-      where: { email },
-    });
-    return user || null;
-  }
-
   public async login(userFromRequest: IUserFromReq): Promise<IToken> {
     const { email, password } = userFromRequest;
 
@@ -40,6 +22,24 @@ class UserService implements IServiceUser {
     }
 
     throw new InvalidUserData();
+  }
+
+  private async getUserByEmail(email: string): Promise<IUserFromDB | null> {
+    const user = await this.userModel.findOne({
+      where: { email },
+    });
+    return user || null;
+  }
+
+  static validateUserDataFromRequest(userFromRequest: IUserFromReq): void {
+    const { error: joiError } = userPattern.validate(userFromRequest);
+
+    if (joiError) {
+      const joiErrorMessage = joiError.details[0].message;
+      const error = (joiErrorMessage === 'All fields must be filled')
+        ? new InvalidUserRequest() : new InvalidUserData();
+      throw error;
+    }
   }
 }
 
