@@ -18,11 +18,12 @@ In this project, I was able to:
 - Write integration tests;
 - Write MySQL raw queries.
 
-## Main Technologies used 🧰
+## Back-End Main Technologies 🧰
 <table>
+    <caption align="center"><h3>Development</h3></caption>
     <thead>
         <tr>
-            <th>JavaScript</th>
+            <th>TypeScript</th>
             <th>Express</th>
             <th>Sequelize</th>
             <th>Node.JS</th>
@@ -36,13 +37,13 @@ In this project, I was able to:
     <tbody>
         <tr>
             <td align="center">
-                <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> 
+                <a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer"> 
                     <img 
-                        src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" 
-                        alt="javascript" 
+                        src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" 
+                        alt="typescript" 
                         width="40" 
                         height="40"
-                    /> 
+                    />
                 </a>
             </td>
             <td align="center">
@@ -128,63 +129,64 @@ In this project, I was able to:
         </tr>
     </tbody>
 </table>
+<table>
+    <caption align="center"><h3>Test</h3></caption>
+    <thead>
+        <tr>
+            <th>Mocha</th>
+            <th>Chai</th>
+            <th>Sinon</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td align="center">
+                <a href="https://mochajs.org/" target="_blank" rel"noreferrer">
+                    <img
+                        src="https://avatars.githubusercontent.com/u/8770005?s=200&v=4"
+                        alt="mocha-js"
+                        width="40"
+                        height="40"
+                    />
+                </a>
+            </td>
+             <td align="center">
+                <a href="https://www.chaijs.com/" target="_blank" rel="noreferrer"> 
+                    <img src="https://raw.githubusercontent.com/gist/keithamus/3d8cfbaeddf8bdf5f7cd94a3bdae0934/raw/63ca295f3aa7e1b94b598d84dfe0330383497a8c/Chai%20Logo%20(C).svg"
+                        alt="chai-js" 
+                        width="40" 
+                        height="40"
+                    /> 
+                </a>
+            </td>
+             <td align="center">
+                <a href="https://sinonjs.org/" target="_blank" rel="noreferrer"> 
+                    <img 
+                        src="https://sinonjs.org/assets/images/logo.png" 
+                        alt="sinon-js" 
+                        width="40" 
+                        height="40"
+                    /> 
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 ## Running the application ⚙️
+ > You must have node, docker, and docker-compose installed
 
 1. Clone the repository and enter it
 ```
-git clone git@github.com:ImVictorM/Blog-API.git && cd Blog-API
+git clone git@github.com:ImVictorM/Trybe-Football-Club.git && cd Trybe-Football-Club
 ```
-### Methods
-
-<details>
-<summary><h4>🐋 Running with docker (recommended)</h4></summary>
-
- > You must have docker installed
- 
 2. Get the containers running
 ```
-docker-compose up -d
+npm run compose:up
 ```
-3. Enter the server's container
-```
-docker exec -it blogs_api bash
-```
-4. Install the dependencies
-```
-npm install
-```
-
-5. Start the server
-```
-npm run start
----- or ----
-npm run prestart
-npm run debug
-```
-</details>
-
-<details>
-<summary><h4>🖥️ Running locally</h4></summary>
-
- > You must have node and MySQL installed
- 
-2. Install the dependencies
-```
-npm install
-```
-
-3. Rename the file `.env.example` to `.env`
-
-4. Start the server
-```
-npm run start
----- or ----
-npm run prestart
-npm run debug
-```
-
-</details>
+It can take a while for the application to be up. <br>
+The front end will be running on http://localhost:3000 (PORT 3000). <br>
+The back end will be running on http://localhost:3001 (PORT 3001).
 
 ## Endpoints 🌐
 
