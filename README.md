@@ -12,7 +12,7 @@ To ensure security and prevent unauthorized access, users must log in to obtain 
 In this project, I was able to:
 - Build and API using the Model-Service-Controller (MSC) architecture;
 - Build a CRUD with TypeScript, using Sequelize ORM;
-- Use POO and SOLID concepts;
+- Use OOP and SOLID concepts;
 - Create and associate tables using Sequelize Models and Migrations;
 - Use Docker to integrate front-end with back-end;
 - Write integration tests;
